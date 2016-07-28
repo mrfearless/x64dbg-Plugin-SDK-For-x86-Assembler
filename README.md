@@ -6,7 +6,7 @@ fearless 2016 - [www.LetTheLight.in](http://www.LetTheLight.in)
 
 This is a consolidation and conversion of the original x64dbg plugin SDK files: `_plugins.h`, `_plugin_types.h`, `bridgemain.h` & `_exports.h` to a format that will work with MASM and other assemblers. Currently this package only supports 32bit x64dbg (x32dbg).
 
-For 64bit support use the x64dbg Plugin SDK for x64 Assembler found [here](https://github.com/mrfearless/x64dbg-Plugin-SDK-for-x64-Assembler)
+For 64bit support use the x64dbg Plugin SDK for x64 Assembler found [here](https://github.com/mrfearless/x64dbg-Plugin-SDK-For-x64-Assembler)
 
 v1.0.0.5 - Last updated: 28/07/2016 - small updates
 
