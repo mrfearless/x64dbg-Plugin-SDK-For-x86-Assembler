@@ -8,7 +8,7 @@ Overview
 
 This is a consolidation and conversion of the original x64dbg plugin SDK files: _plugins.h, _plugin_types.h, bridgemain.h & _exports.h to a format that will work with MASM and other assemblers. Currently this package only supports 32bit x64dbg (x32dbg).
 
-For 64bit support use the x64dbg Plugin SDK for x64 Assembler found here: https://github.com/mrfearless/x64dbg-Plugin-SDK-for-x64-Assembler
+For 64bit support use the x64dbg Plugin SDK for x64 Assembler found here: https://github.com/mrfearless/x64dbg-Plugin-SDK-For-x64-Assembler
 
 
 Whats included in this package
@@ -17,10 +17,10 @@ Whats included in this package
  - Masm32 version of the x64dbg plugin SDK found in the pluginsdk folder
  - RadASM testplugin project and files as a working example of how to use the plugin SDK
  - RadASM template for creating your own x32dbg plugins.
- - RadASM Code Completion files for easy use of the x64dbg plugin SDK for Masm
+ - RadASM Code Completion files for easy use of the x64dbg Plugin SDK For x86 Assembler (Masm)
 
 
-The files that comprise this version of the x64dbg plugin SDK for Masm are
+The files that comprise this version of the x64dbg Plugin SDK For x86 Assembler are
 
  - pluginsdk\include\x64dbgpluginsdk.inc     Main include file for ease of use - see below on how to use.
  - pluginsdk\include\x32dbg.inc              x32dbg masm style include converted from x64dbg _plugins.h, _plugin_type.h & _exports.h source files
@@ -48,8 +48,8 @@ How to use
 
 There are a number of ways of using the pluginsdk files in your own projects
 
+ - Copy the x64dbgpluginsdk.inc, x32dbg.inc, x32bridge.inc, debug_x86.inc and TitanEngine_x86.inc files from pluginsdk\include\ folder to your masm32\include folder
  - Copy the x32dbg.lib, x32bridge.lib, debug_x86.lib and TitanEngine_x86.lib files from pluginsdk\lib folder to your masm32\lib folder
- - Copy the x32dbg.inc, x32bridge.inc, debug_x86.inc and TitanEngine_x86.inc files from pluginsdk\include\ folder to your masm32\include folder
  - Add a line in your source code:
 
     include x64dbgpluginsdk.inc
@@ -94,8 +94,8 @@ Make sure you get the latest versions of the x32dbg.lib, x32bridge.lib files fro
 
 Including a manifest and version info in your plugin .dll (.dp32) may prevent anti-virus false positives. The testplugin has an example of this usage.
 
- -  RadASM IDE: http://www.softpedia.com/get/Programming/File-Editors/RadASM.shtml
- -  Masm32: http://www.masm32.com/masmdl.htm
+ - RadASM IDE: http://www.softpedia.com/get/Programming/File-Editors/RadASM.shtml
+ - Masm32: http://www.masm32.com/masmdl.htm
 
 
 x64dbg

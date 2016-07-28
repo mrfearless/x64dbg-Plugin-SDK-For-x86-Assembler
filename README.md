@@ -80,8 +80,8 @@ Make sure you get the latest versions of the `x32dbg.lib`, `x32bridge.lib` files
 
 Including a manifest and version info in your plugin .dll (.dp32) may prevent anti-virus false positives. The testplugin has an example of this usage.
 
-*  [RadASM IDE](http://www.softpedia.com/get/Programming/File-Editors/RadASM.shtml)
-*  [Masm32](http://www.masm32.com/masmdl.htm)
+* [RadASM IDE](http://www.softpedia.com/get/Programming/File-Editors/RadASM.shtml)
+* [Masm32](http://www.masm32.com/masmdl.htm)
 
 
 ## x64dbg
