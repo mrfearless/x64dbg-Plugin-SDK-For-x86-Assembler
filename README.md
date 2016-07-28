@@ -19,7 +19,7 @@ v1.0.0.5 - Last updated: 28/07/2016 - small updates
 The files that comprise this version of the x64dbg plugin SDK for Masm are
 
 * `pluginsdk\x64dbgpluginsdk.inc` - _Main include file for ease of use - see below on how to use._
-* `pluginsdk\x32dbg.inc` - _x32dbg masm style include converted from x64dbg _plugins.h, _plugin_type.h & _exports.h source files_
+* `pluginsdk\x32dbg.inc` - _x32dbg masm style include converted from x64dbg source files_
 * `pluginsdk\x32dbg.lib` - _x32dbg library from the x64dbg source for x32dbg.dll_
 * `pluginsdk\x32bridge.inc` - _x32bridge masm style include converted from x64dbg bridgemain.h source file_
 * `pluginsdk\x32bridge.lib` - _x32bridge library from the x64dbg source for x32bridge.dll_
@@ -76,7 +76,7 @@ With any of these options, feel free to add any other includes and libs as you n
 ## Notes
 For more information on the x64dbg plugin SDK functions and overall usage please read the x64dbg help manual section on plugins found [here](http://x64dbg.com/help/index.htm).
 
-Make sure you get the latest versions of the `x32dbg.lib`, `x32bridge.lib` files from the x64dbg source. The files provided here may become outdated as changes occur with the development of the x64dbg debugger. I may add changes to the x32dbg.inc and x32bridge.inc to take into account new features and functions in future - but I wont guarantee that I will, you may need to manually update the .inc files yourself and download the newest .lib files if you want this package to stay up to date.
+Make sure you get the latest versions of the `x32dbg.lib`, `x32bridge.lib` files from the x64dbg source. The files provided here may become outdated as changes occur with the development of the x64dbg debugger. I may add changes to the `x32dbg.inc` and `x32bridge.inc` to take into account new features and functions in future - but I wont guarantee that I will, you may need to manually update the .inc files yourself and download the newest .lib files if you want this package to stay up to date.
 
 Including a manifest and version info in your plugin .dll (.dp32) may prevent anti-virus false positives. The testplugin has an example of this usage.
 
