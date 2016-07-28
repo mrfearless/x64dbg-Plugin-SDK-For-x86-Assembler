@@ -14,19 +14,19 @@ v1.0.0.5 - Last updated: 28/07/2016 - small updates
 * Masm32 version of the x64dbg plugin SDK found in the pluginsdk folder
 * RadASM testplugin project and files as a working example of how to use the plugin SDK
 * RadASM template for creating your own x32dbg plugins.
-* RadASM Code Completion files for easy use of the x64dbg plugin SDK for Masm
+* RadASM Code Completion files for easy use of the x64dbg Plugin SDK For x86 Assembler
 
-The files that comprise this version of the x64dbg plugin SDK for Masm are
+The files that comprise this version of the x64dbg Plugin SDK For x86 Assembler are
 
-* `pluginsdk\x64dbgpluginsdk.inc` - _Main include file for ease of use - see below on how to use._
-* `pluginsdk\x32dbg.inc` - _x32dbg masm style include converted from x64dbg source files_
-* `pluginsdk\x32dbg.lib` - _x32dbg library from the x64dbg source for x32dbg.dll_
-* `pluginsdk\x32bridge.inc` - _x32bridge masm style include converted from x64dbg bridgemain.h source file_
-* `pluginsdk\x32bridge.lib` - _x32bridge library from the x64dbg source for x32bridge.dll_
-* `pluginsdk\dbghelp_x86.inc` - _dbghelp_x86 masm style include_
-* `pluginsdk\dbghelp_x86.lib` - _dbghelp_x86 library from x64dbg source for dbghelp.dll_
-* `pluginsdk\TitanEngine_x86.inc` - _TitanEngine masm style include converted from TitanEngine.h_
-* `pluginsdk\TitanEngine_x86.lib` - _TitanEngine library from the x64dbg source for TitanEngine.dll_
+* `pluginsdk\include\x64dbgpluginsdk.inc` - _Main include file - see below on how to use._
+* `pluginsdk\include\x32dbg.inc` - _x32dbg masm style include converted from x64dbg source files_
+* `pluginsdk\include\x32bridge.inc` - _x32bridge masm style include converted from x64dbg bridgemain.h_
+* `pluginsdk\include\dbghelp_x86.inc` - _dbghelp_x86 masm style include_
+* `pluginsdk\include\TitanEngine_x86.inc` - _TitanEngine masm style include converted from TitanEngine.h_
+* `pluginsdk\lib\x32dbg.lib` - _x32dbg library from the x64dbg source for x32dbg.dll_
+* `pluginsdk\lib\x32bridge.lib` - _x32bridge library from the x64dbg source for x32bridge.dll_
+* `pluginsdk\lib\dbghelp_x86.lib` - _dbghelp_x86 library from x64dbg source for dbghelp.dll_
+* `pluginsdk\lib\TitanEngine_x86.lib` - _TitanEngine library from the x64dbg source for TitanEngine.dll_
 
 The files that are included in the extra's folder are
 
@@ -40,8 +40,8 @@ The files that are included in the extra's folder are
 ## How to use
 There are a number of ways of using the pluginsdk files in your own projects
 
+* Copy the `x64dbgpluginsdk.inc`, `x32dbg.inc`, `x32bridge.inc`, `debug_x86.inc` and `TitanEngine_x86.inc` files from `pluginsdk\include` folder to your `masm32\include` folder
 * Copy the `x32dbg.lib`, `x32bridge.lib`, `debug_x86.lib` and `TitanEngine_x86`.lib files from `pluginsdk\lib` folder to your `masm32\lib` folder
-* Copy the `x32dbg.inc`, `x32bridge.inc`, `debug_x86.inc` and `TitanEngine_x86.inc` files from `pluginsdk\include` folder to your `masm32\include` folder
 * Add a line in your source code:
 ```
     include x64dbgpluginsdk.inc
