@@ -4,7 +4,7 @@ fearless 2016 - [www.LetTheLight.in](http://www.LetTheLight.in)
 
 ## Overview
 
-This is a consolidation and conversion of the original x64dbg plugin SDK files: _plugins.h, _plugin_types.h, bridgemain.h & _exports.h to a format that will work with MASM and other assemblers. Currently this package only supports 32bit x64dbg (x32dbg).
+This is a consolidation and conversion of the original x64dbg plugin SDK files: `_plugins.h`, `_plugin_types.h`, `bridgemain.h` & `_exports.h` to a format that will work with MASM and other assemblers. Currently this package only supports 32bit x64dbg (x32dbg).
 
 For 64bit support use the x64dbg Plugin SDK for x64 Assembler found [here](https://github.com/mrfearless/x64dbg-Plugin-SDK-for-x64-Assembler)
 
@@ -18,30 +18,30 @@ v1.0.0.5 - Last updated: 28/07/2016 - small updates
 
 The files that comprise this version of the x64dbg plugin SDK for Masm are
 
-* pluginsdk\x64dbgpluginsdk.inc - Main include file for ease of use - see below on how to use.
-* pluginsdk\x32dbg.inc -  x32dbg masm style include converted from x64dbg _plugins.h, _plugin_type.h & _exports.h source files
-* pluginsdk\x32dbg.lib -  x32dbg library from the x64dbg source for x32dbg.dll
-* pluginsdk\x32bridge.inc - x32bridge masm style include converted from x64dbg bridgemain.h source file
-* pluginsdk\x32bridge.lib - x32bridge library from the x64dbg source for x32bridge.dll
-* pluginsdk\dbghelp_x86.inc - dbghelp_x86 masm style include
-* pluginsdk\dbghelp_x86.lib - dbghelp_x86 library from x64dbg source for dbghelp.dll
-* pluginsdk\TitanEngine_x86.inc - TitanEngine masm style include converted from TitanEngine.h
-* pluginsdk\TitanEngine_x86.lib - TitanEngine library from the x64dbg source for TitanEngine.dll
+* `pluginsdk\x64dbgpluginsdk.inc` - _Main include file for ease of use - see below on how to use._
+* `pluginsdk\x32dbg.inc` - _x32dbg masm style include converted from x64dbg _plugins.h, _plugin_type.h & _exports.h source files_
+* `pluginsdk\x32dbg.lib` - _x32dbg library from the x64dbg source for x32dbg.dll_
+* `pluginsdk\x32bridge.inc` - _x32bridge masm style include converted from x64dbg bridgemain.h source file_
+* `pluginsdk\x32bridge.lib` - _x32bridge library from the x64dbg source for x32bridge.dll_
+* `pluginsdk\dbghelp_x86.inc` - _dbghelp_x86 masm style include_
+* `pluginsdk\dbghelp_x86.lib` - _dbghelp_x86 library from x64dbg source for dbghelp.dll_
+* `pluginsdk\TitanEngine_x86.inc` - _TitanEngine masm style include converted from TitanEngine.h_
+* `pluginsdk\TitanEngine_x86.lib` - _TitanEngine library from the x64dbg source for TitanEngine.dll_
 
 The files that are included in the extra's folder are
 
-* install.bat - Copies the pluginsdk files to your Masm32 folders (lib, include) 
-* masmApiCall.api - RadASM Code Completion file for api calls (for x64dbg plugin SDK)
-* masmApiConst.api - RadASM Code Completion file for constants (for x64dbg plugin SDK)
-* masmApiStruct.api - RadASM Code Completion file for structures (for x64dbg plugin SDK)
-* x32dbgplugin.tpl - RadASM 32bit x64dbg plugin template for easy project creation
+* `install.bat` - _Copies the pluginsdk files to your Masm32 folders (lib, include)_
+* `masmApiCall.api` - _RadASM Code Completion file for api calls (for x64dbg plugin SDK)_
+* `masmApiConst.api` - _RadASM Code Completion file for constants (for x64dbg plugin SDK)_
+* `masmApiStruct.api` - _RadASM Code Completion file for structures (for x64dbg plugin SDK)_
+* `x32dbgplugin.tpl` - _RadASM 32bit x64dbg plugin template for easy project creation_
 
 
 ## How to use
 There are a number of ways of using the pluginsdk files in your own projects
 
-* Copy the x32dbg.lib, x32bridge.lib, debug_x86.lib and TitanEngine_x86.lib files from pluginsdk\lib folder to your masm32\lib folder
-* Copy the x32dbg.inc, x32bridge.inc, debug_x86.inc and TitanEngine_x86.inc files from pluginsdk\include folder to your masm32\include folder
+* Copy the `x32dbg.lib`, `x32bridge.lib`, `debug_x86.lib` and `TitanEngine_x86`.lib files from `pluginsdk\lib` folder to your `masm32\lib` folder
+* Copy the `x32dbg.inc`, `x32bridge.inc`, `debug_x86.inc` and `TitanEngine_x86.inc` files from `pluginsdk\include` folder to your `masm32\include` folder
 * Add a line in your source code:
 ```
     include x64dbgpluginsdk.inc
@@ -60,7 +60,7 @@ There are a number of ways of using the pluginsdk files in your own projects
 
 Alternatively you can use the included template to easily create a x32dbg plugin project ready to use
 
-* Copy the template\x32dbg_plugin.tpl file to your RadASM\Masm\Templates folder.
+* Copy the `template\x32dbg_plugin.tpl` file to your `RadASM\Masm\Templates` folder.
 * Open RadASM and choose a new project.
 * Choose the project name and folder.
 * Specify project as a dll (dynamic link library) type .
@@ -76,7 +76,7 @@ With any of these options, feel free to add any other includes and libs as you n
 ## Notes
 For more information on the x64dbg plugin SDK functions and overall usage please read the x64dbg help manual section on plugins found [here](http://x64dbg.com/help/index.htm).
 
-Make sure you get the latest versions of the x32dbg.lib, x32bridge.lib files from the x64dbg source. The files provided here may become outdated as changes occur with the development of the x64dbg debugger. I may add changes to the x32dbg.inc and x32bridge.inc to take into account new features and functions in future - but I wont guarantee that I will, you may need to manually update the .inc files yourself and download the newest .lib files if you want this package to stay up to date.
+Make sure you get the latest versions of the `x32dbg.lib`, `x32bridge.lib` files from the x64dbg source. The files provided here may become outdated as changes occur with the development of the x64dbg debugger. I may add changes to the x32dbg.inc and x32bridge.inc to take into account new features and functions in future - but I wont guarantee that I will, you may need to manually update the .inc files yourself and download the newest .lib files if you want this package to stay up to date.
 
 Including a manifest and version info in your plugin .dll (.dp32) may prevent anti-virus false positives. The testplugin has an example of this usage.
 
