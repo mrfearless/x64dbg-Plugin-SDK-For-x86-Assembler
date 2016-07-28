@@ -1,0 +1,3 @@
+#include "Res/testpluginDlg.rc"
+#include "Res/testpluginRes.rc"
+#include "Res/testpluginVer.rc"

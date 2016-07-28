@@ -1,0 +1,16 @@
+bak/
+*.undo
+*.obj
+*.pdb
+*.ilk
+*.exp
+testplugin.lib
+testplugin.exp
+Help/
+template/
+template/x32dbg_plugin/
+downloads/
+screenshots/
+wiki/
+testplugin/go.bat
+packagesdk.bat

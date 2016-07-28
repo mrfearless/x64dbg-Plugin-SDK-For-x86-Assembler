@@ -1,0 +1,36 @@
+;-----------------------------------------------------------------------------------------------------
+; x64dbg plugin SDK for Masm - fearless 2015 - www.LetTheLight.in
+;
+; masmApiStruct.api
+;
+; Paste this text at the end of \Radasm\Masm\masmApiStruct.api to add these to Radasm
+;
+;-----------------------------------------------------------------------------------------------------
+PLUG_INITSTRUCT,pluginHandle,sdkVersion,pluginVersion,pluginName
+PLUG_SETUPSTRUCT,hwndDlg,hMenu,hMenuDisasm,hMenuDump,hMenuStack
+PLUG_CB_INITDEBUG,szFileName
+PLUG_CB_STOPDEBUG,reserved
+PLUG_CB_CREATEPROCESS,CreateProcessInfo,modInfo,DebugFileName,fdProcessInfo
+PLUG_CB_EXITPROCESS,ExitProcess
+PLUG_CB_CREATETHREAD,CreateThread,dwThreadId
+PLUG_CB_EXITTHREAD,ExitThread,dwThreadId
+PLUG_CB_SYSTEMBREAKPOINT,reserved
+PLUG_CB_LOADDLL,LoadDll,modInfo,modname
+PLUG_CB_UNLOADDLL,UnloadDll
+PLUG_CB_OUTPUTDEBUGSTRING,DebugString
+PLUG_CB_EXCEPTION,Exception
+PLUG_CB_BREAKPOINT,breakpoint
+PLUG_CB_PAUSEDEBUG,reserved
+PLUG_CB_RESUMEDEBUG,reserved
+PLUG_CB_STEPPED,reserved
+PLUG_CB_ATTACH,dwProcessId
+PLUG_CB_DETACH,fdProcessInfo
+PLUG_CB_DEBUGEVENT,DebugEvent
+PLUG_CB_MENUENTRY,hEntry
+PLUG_CB_WINEVENT,message,result,retval
+PLUG_CB_WINEVENTGLOBAL,message,retval
+CELLINFO,row,col,string
+SELECTIONDATA,start,finish
+MEMORY_INFO,value,size_,mnemonic
+VALUE_INFO,value,size_
+BASIC_INSTRUCTION_INFO,type_,value:VALUE_INFO,memory:MEMORY_INFO,address,branch,call_,size_,instruction
