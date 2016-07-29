@@ -20,7 +20,7 @@ v1.0.0.5 - Last updated: 28/07/2016 - small updates
 
 [Additional Notes](https://github.com/mrfearless/x64dbg-Plugin-SDK-For-x86-Assembler/wiki/Additional-Notes)
 
-## Plugins that use the x64dbg Plugin SDK for x86 Assembler
+## Plugins that use the x64dbg Plugin SDK For x86 Assembler
 
 * [APIInfo Plugin (x86)](https://github.com/mrfearless/APIInfo-Plugin-x86)
 * [APISearch Plugin (x86)](https://github.com/mrfearless/APISearch-Plugin-x86)
@@ -28,7 +28,7 @@ v1.0.0.5 - Last updated: 28/07/2016 - small updates
 * [StepInt3 Plugin (x86)](https://github.com/mrfearless/StepInt3-Plugin-x86)
 
 
-## Plugins that use the x64dbg Plugin SDK for x64 Assembler
+## Plugins that use the x64dbg Plugin SDK For x64 Assembler
 
 The x64dbg Plugin SDK for x64 Assembler can be found [here](https://github.com/mrfearless/x64dbg-Plugin-SDK-For-x64-Assembler)
 
