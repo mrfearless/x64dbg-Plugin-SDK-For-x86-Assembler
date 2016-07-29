@@ -12,7 +12,7 @@ v1.0.0.5 - Last updated: 28/07/2016 - small updates
 
 ## More Information
 
-[Whats included in the x64dbg Plugin SDK (x86) package](https://github.com/mrfearless/x64dbg-Plugin-SDK-For-x86-Assembler/wiki/Whats-included-in-the-x64dbg-Plugin-SDK-(x86)-Package)
+[Whats included in the x64dbg Plugin SDK (x86) package](https://github.com/mrfearless/x64dbg-Plugin-SDK-For-x86-Assembler/wiki/Whats-included-in-the-x64dbg-Plugin-SDK-(x86)-package)
 
 [How to use the x64dbg Plugin SDK (x86)](https://github.com/mrfearless/x64dbg-Plugin-SDK-For-x86-Assembler/wiki/How-to-use-the-x64dbg-Plugin-SDK-(x86))
 
