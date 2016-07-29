@@ -40,6 +40,3 @@ The x64dbg Plugin SDK for x64 Assembler can be found [here](https://github.com/m
 ## x64dbg
 * [x64dbg website](http://x64dbg.com)
 * [x64dbg source](https://github.com/x64dbg/x64dbg)
-* [x64dbg downloads](http://sourceforge.net/projects/x64dbg)
-* [x64dbg plugin](https://github.com/x64dbg/testplugin)
-* [Mr. eXoDia](http://mrexodia.cf)
