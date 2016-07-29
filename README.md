@@ -10,6 +10,8 @@ For 64bit support use the x64dbg Plugin SDK for x64 Assembler found [here](https
 
 v1.0.0.5 - Last updated: 28/07/2016 - small updates
 
+## More Information
+
 [Whats included in the x64dbg Plugin SDK (x86) package](https://github.com/mrfearless/x64dbg-Plugin-SDK-For-x86-Assembler/wiki/Whats-included-in-the-x64dbg-Plugin-SDK-(x86)-Package)
 
 [How to use the x64dbg Plugin SDK (x86)](https://github.com/mrfearless/x64dbg-Plugin-SDK-For-x86-Assembler/wiki/How-to-use-the-x64dbg-Plugin-SDK-(x86))
@@ -28,7 +30,7 @@ v1.0.0.5 - Last updated: 28/07/2016 - small updates
 
 ## Plugins that use the x64dbg Plugin SDK for x64 Assembler
 
-[x64dbg Plugin SDK for x64 Assembler](https://github.com/mrfearless/x64dbg-Plugin-SDK-For-x64-Assembler)
+The x64dbg Plugin SDK for x64 Assembler can be found [here](https://github.com/mrfearless/x64dbg-Plugin-SDK-For-x64-Assembler)
 
 * [APISearch Plugin (x64)](https://github.com/mrfearless/APISearch-Plugin-x64)
 * [AutoCmdLine Plugin (x64)](https://github.com/mrfearless/AutoCmdLine-Plugin-x64)
