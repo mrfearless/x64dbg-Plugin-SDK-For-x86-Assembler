@@ -44,6 +44,12 @@ _dbg_sendmessage            PROTO C :DWORD, :DWORD, :DWORD ; (DBGMSG type, void*
 _dbg_valfromstring          PROTO C ;(const char* string, duint* value);
 _dbg_valtostring            PROTO C :DWORD, :DWORD ; (const char* string, duint value);
 
+; x64dbg.inc main plugin sdk exports/functions:
+;
+pluginit	        		PROTO C :DWORD          ; Required prototype and export for x64dbg plugin SDK
+plugstop            		PROTO C                 ; Required prototype and export for x64dbg plugin SDK
+plugsetup           		PROTO C :DWORD          ; Required prototype and export for x64dbg plugin SDK
+
 ; x32dbg.inc plugin functions - vs2010/vsce2013 prototypes
 ;
 _plugin_debugpause          PROTO C
