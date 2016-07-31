@@ -26,6 +26,8 @@ v1.0.0.5 - Last updated: 28/07/2016 - small updates
 * [APISearch Plugin (x86)](https://github.com/mrfearless/APISearch-Plugin-x86)
 * [AutoCmdLine Plugin (x86)](https://github.com/mrfearless/AutoCmdLine-Plugin-x86)
 * [StepInt3 Plugin (x86)](https://github.com/mrfearless/StepInt3-Plugin-x86)
+* [x64dbgUpdateChecker (x86) - direct download](https://dl.dropboxusercontent.com/u/17077376/x64dbg%20Plugins/x64dbgUpdateChecker.zip)
+* [x64dbgpyUpdateChecker (x86) - direct download](https://dl.dropboxusercontent.com/u/17077376/x64dbg%20Plugins/x64dbgpyUpdateChecker.zip)
 
 
 ## Plugins that use the x64dbg Plugin SDK For x64 Assembler

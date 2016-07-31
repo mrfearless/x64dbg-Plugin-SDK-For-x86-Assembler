@@ -77,7 +77,8 @@ Group=Assembly,Resources,Misc
 [*BEGINTXT*]
 x32dbg_plugin.Asm
 ;=====================================================================================
-; x64dbg plugin SDK for Masm - fearless 2016 - www.LetTheLight.in
+; x64dbg plugin SDK For Assembler x86 - fearless - www.LetTheLight.in
+; https://github.com/mrfearless/x64dbg-Plugin-SDK-for-x86-Assembler
 ;
 ; [*PROJECTNAME*].asm
 ;
@@ -88,13 +89,9 @@ x32dbg_plugin.Asm
 .XMM
 .model flat,stdcall
 option casemap:none
-Include x64dbgpluginsdk.inc               ; Main x64dbg Plugin SDK for your program, and prototypes for the main exports 
+Include x64dbgpluginsdk.inc ; Main x64dbg Plugin SDK for your program, and prototypes for the main exports 
 
 Include [*PROJECTNAME*].inc ; plugin's include file
-
-pluginit	        PROTO C :DWORD        ; Required prototype and export for x64dbg plugin SDK
-plugstop            PROTO C               ; Required prototype and export for x64dbg plugin SDK
-plugsetup           PROTO C :DWORD        ; Required prototype and export for x64dbg plugin SDK
 ;=====================================================================================
 
 
@@ -129,14 +126,14 @@ hMenuStack          DD ?
 ;=====================================================================================
 ; Main entry function for a DLL file  - required.
 ;-------------------------------------------------------------------------------------
-DllEntry PROC hInst:HINSTANCE, reason:DWORD, reserved:DWORD
-    .IF reason == DLL_PROCESS_ATTACH
-        mov eax, hInst
+DllMain PROC hinstDLL:HINSTANCE, fdwReason:DWORD, lpvReserved:DWORD
+    .IF fdwReason == DLL_PROCESS_ATTACH
+        mov eax, hinstDLL
         mov hInstance, eax
     .ENDIF
     mov eax,TRUE
     ret
-DllEntry Endp
+DllMain ENDP
 
 
 ;=====================================================================================
@@ -170,7 +167,7 @@ pluginit PROC C PUBLIC USES EBX initStruct:DWORD
 
 	mov eax, TRUE
 	ret
-pluginit endp
+pluginit ENDP
 
 
 ;=====================================================================================
@@ -185,11 +182,11 @@ plugstop PROC C PUBLIC
     
     ; remove any menus, unregister any callbacks etc
     Invoke _plugin_menuclear, hMenu
-    Invoke GuiAddLogMessage, Addr szPluginUnloaded
+    Invoke GuiAddLogMessage, Addr sz[*PROJECTNAME*]Unloaded
     
     mov eax, TRUE
     ret
-plugstop endp
+plugstop ENDP
 
 
 ;=====================================================================================
@@ -197,7 +194,7 @@ plugstop endp
 ;
 ; Arguments: setupStruct - a pointer to a PLUG_SETUPSTRUCT structure
 ; 
-; Notes:     setupStruct contains useful handles for use within x64_dbg, mainly Qt 
+; Notes:     setupStruct contains useful handles for use within x64dbg, mainly Qt 
 ;            menu handles (which are not supported with win32 api) and the main window
 ;            handle with this information you can add your own menus and menu items 
 ;            to an existing menu, or one of the predefined supported right click 
@@ -221,11 +218,11 @@ plugsetup PROC C PUBLIC USES EBX setupStruct:DWORD
     mov hMenuStack, eax
     
     ; Do any setup here: add menus, menu items, callback and commands etc
-    Invoke GuiAddLogMessage, Addr szPluginLoaded
-    Invoke _plugin_menuaddentry, hMenu, MENU_PLUGIN1, Addr szMenuPlugin1
+    Invoke GuiAddLogMessage, Addr sz[*PROJECTNAME*]Loaded
+    Invoke _plugin_menuaddentry, hMenu, MENU_[*PROJECTNAME*], Addr sz[*PROJECTNAME*]
     
     ret
-plugsetup endp
+plugsetup ENDP
 
 
 ;=====================================================================================
@@ -243,19 +240,19 @@ CBMENUENTRY PROC C PUBLIC USES EBX cbType:DWORD, cbInfo:DWORD
     mov ebx, cbInfo
     mov eax, [ebx].PLUG_CB_MENUENTRY.hEntry
     
-    .IF eax == MENU_PLUGIN1
-        Invoke DialogBoxParam, hInstance, IDD_PluginDlg, hwndDlg, OFFSET PluginDlgProc, NULL
+    .IF eax == MENU_[*PROJECTNAME*]
+        Invoke DialogBoxParam, hInstance, IDD_PluginDlg, hwndDlg, OFFSET [*PROJECTNAME*]DlgProc, NULL
     .ENDIF
     
     ret
 
-CBMENUENTRY endp
+CBMENUENTRY ENDP
 
 
 ;=====================================================================================
-; Plugin Dialog Procedure
+; [*PROJECTNAME*] Dialog Procedure
 ;-------------------------------------------------------------------------------------
-PluginDlgProc PROC hWin:HWND,iMsg:DWORD,wParam:WPARAM, lParam:LPARAM
+[*PROJECTNAME*]DlgProc PROC hWin:HWND,iMsg:DWORD,wParam:WPARAM, lParam:LPARAM
 
     mov eax, iMsg
     .IF eax == WM_INITDIALOG
@@ -276,10 +273,10 @@ PluginDlgProc PROC hWin:HWND,iMsg:DWORD,wParam:WPARAM, lParam:LPARAM
 	.ENDIF
     mov eax, TRUE
     ret
-PluginDlgProc endp
+[*PROJECTNAME*]DlgProc ENDP
 
 
-END DllEntry
+END DllMain
 
 
 
@@ -300,7 +297,8 @@ END DllEntry
 [*BEGINTXT*]
 x32dbg_plugin.Inc
 ;=====================================================================================
-; x64dbg plugin SDK for Masm - fearless 2016
+; x64dbg plugin SDK For Assembler x86 - fearless
+; https://github.com/mrfearless/x64dbg-Plugin-SDK-for-x86-Assembler
 ;
 ; [*PROJECTNAME*].inc
 ;
@@ -311,19 +309,19 @@ include kernel32.inc
 includelib user32.lib
 includelib kernel32.lib
 
-PluginDlgProc       PROTO :DWORD, :DWORD, :DWORD, :DWORD
+[*PROJECTNAME*]DlgProc       PROTO :DWORD, :DWORD, :DWORD, :DWORD
 
 .CONST
 CRLF                TEXTEQU <13,10,0> ; carriage return and linefeed for strings that require them (GuiAddLogMessage for example) 
 
-MENU_PLUGIN1        EQU 1
+MENU_[*PROJECTNAME*]        EQU 1
 IDD_PluginDlg       EQU 1000
 IDC_PLUGINDLG_OK    EQU 1001
 
 .DATA
-szMenuPlugin1       DB "x32dbg_plugin",0
-szPluginLoaded      DB "x32dbg_plugin loaded.",CRLF
-szPluginUnloaded    DB "x32dbg_plugin unloaded.",CRLF
+sz[*PROJECTNAME*]       DB "[*PROJECTNAME*]",0
+sz[*PROJECTNAME*]Loaded      DB "[*PROJECTNAME*] loaded.",CRLF
+sz[*PROJECTNAME*]Unloaded    DB "[*PROJECTNAME*] unloaded.",CRLF
 sz[*PROJECTNAME*]Info       DB 13,10         
                     DB "[*PROJECTNAME*] x32dbg plugin by fearless 2016 - www.LetTheLight.in",13,10
                     DB 13,10
@@ -338,9 +336,10 @@ hInstance           DD ?
 [*BEGINTXT*]
 x32dbg_plugin.Def
 ;--------------------------------------------------------------------------------------------------------
-; x64_dbg plugin SDK for Masm32 - fearless 2015
+; x64dbg plugin SDK For Assembler x86 - fearless
 ;
-; Export definition file for your plugin
+; [*PROJECTNAME*].def - Export definition file for your plugin
+;
 ;--------------------------------------------------------------------------------------------------------
 
 LIBRARY [*PROJECTNAME*]
@@ -494,31 +493,4 @@ EXSTYLE 0x00000000
 BEGIN
   CONTROL "Ok",IDC_PLUGINDLG_OK,"Button",0x50010000,56,71,78,17,0x00000000
 END
-[*ENDTXT*]
-[*BEGINTXT*]
-go.bat
-Copy [*PROJECTNAME*].dp32 M:\x64dbg\x32\plugins\[*PROJECTNAME*].dp32 /y > NUL
-[*ENDTXT*]
-[*BEGINTXT*]
-package.bat
-@echo off
-echo x64dbg plugin sdk for Masm - Creating packages
-echo.
-echo Creating [*PROJECTNAME*] source package...
-del [*PROJECTNAME*]Source.zip
-"Z:\Program Files\Compression Programs\WinRAR\WinRar.exe" a -m5 -r [*PROJECTNAME*]Source.zip [*PROJECTNAME*].rap [*PROJECTNAME*].Inc [*PROJECTNAME*].Asm [*PROJECTNAME*]-readme.txt [*PROJECTNAME*].rc [*PROJECTNAME*].Def [*PROJECTNAME*].xml .\Images\*.png .\Res\*.*
-echo.
-echo Creating [*PROJECTNAME*] full package including source...
-del [*PROJECTNAME*]-FullPackageIncSource.zip
-"Z:\Program Files\Compression Programs\WinRAR\WinRar.exe" a -m5 [*PROJECTNAME*]-FullPackageIncSource.zip APIInfoSource.zip [*PROJECTNAME*]-readme.txt [*PROJECTNAME*].dp32
-echo.
-echo.Copying files to BitBucker project folders...
-Copy /Y [*PROJECTNAME*]Source.zip M:\Bitbucket\x64dbg-plugin-sdk-for-masm\extras\plugins\ >> NUL
-Copy /Y [*PROJECTNAME*]-readme.txt M:\Bitbucket\x64dbg-plugin-sdk-for-masm\extras\plugins\ >> NUL
-Copy /Y [*PROJECTNAME*]-readme.txt M:\Bitbucket\x64dbg-plugin-sdk-for-masm\downloads\ >> NUL
-Copy /Y [*PROJECTNAME*].dp32 M:\Bitbucket\x64dbg-plugin-sdk-for-masm\extras\plugins\ >> NUL
-Copy /Y [*PROJECTNAME*].dp32 M:\Bitbucket\x64dbg-plugin-sdk-for-masm\downloads\ >> NUL
-Copy /Y [*PROJECTNAME*]-FullPackageIncSource.zip M:\Bitbucket\x64dbg-plugin-sdk-for-masm\downloads\ >> NUL
-echo.
-echo.Finished
 [*ENDTXT*]
