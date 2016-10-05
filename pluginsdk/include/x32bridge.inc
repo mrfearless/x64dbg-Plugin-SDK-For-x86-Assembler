@@ -1,9 +1,17 @@
 ;--------------------------------------------------------------------------------------------------------
-; x64dbg plugin SDK for Masm - fearless 2016 - www.LetTheLight.in
+; x64dbg Plugin SDK For x86 Assembler - https://github.com/mrfearless/x64dbg-Plugin-SDK-For-x86-Assembler
 ;
-; v1.0.0.5 - Last updated: 28/07/2016 
+; fearless 2016 - www.LetTheLight.in
 ;
-; Supports 32bit x32dbg only.
+; v1.0.0.6 - Last updated: 29/09/2016 
+;
+; This SDK Supports 32bit x64dbg only.
+;
+; x64dbg Plugin SDK For x86 Assembler can be downloaded from here:
+; https://github.com/mrfearless/x64dbg-Plugin-SDK-For-x86-Assembler
+;
+; x64dbg Plugin SDK For x64 Assembler can be downloaded from here:
+; https://github.com/mrfearless/x64dbg-Plugin-SDK-For-x64-Assembler
 ;
 ; Include file for x32bridge.dll exports, constants and structures.
 ;
@@ -133,6 +141,7 @@ DbgGetWatchList                 PROTO C :DWORD ;(ListOf(WATCHINFO) list);
 GuiGetCurrentAddress			TEXTEQU <GuiSelectionGet> ; alias
 
 ; GUI functions
+GuiTranslateText				PROTO C  :DWORD ; (const char* Source);
 GuiDisasmAt                     PROTO C  :DWORD, :DWORD ; (duint addr, duint cip);
 GuiSetDebugState                PROTO C  :DWORD ; (DBGSTATE state);
 GuiAddLogMessage                PROTO C  :DWORD ; (const char* msg);
@@ -219,7 +228,14 @@ GuiUpdateDisable				PROTO C
 GuiLoadGraph     				PROTO C  :DWORD ; (BridgeCFGraphList* graph);
 GuiGraphAt     					PROTO C  :DWORD ; (duint addr);
 GuiUpdateGraphView				PROTO C
-
+GuiDisableLog					PROTO C
+GuiEnableLog					PROTO C
+GuiAddFavouriteTool				PROTO C  :DWORD, :DWORD ; (const char* name, const char* description);
+GuiAddFavouriteCommand			PROTO C  :DWORD, :DWORD ; (const char* name, const char* shortcut);
+GuiSetFavouriteToolShortcut		PROTO C  :DWORD, :DWORD ; (const char* name, const char* shortcut);
+GuiFoldDisassembly				PROTO C  :DWORD, :DWORD ; (duint startAddress, duint length);
+GuiSelectInMemoryMap			PROTO C  :DWORD ; (duint addr);
+GuiGetActiveView				PROTO C  :DWORD ; (ACTIVEVIEW* activeView);
 
 
 ; enum macro is used to enumerate constants - similar to how enum works in c. 
@@ -775,7 +791,6 @@ BASIC_INSTRUCTION_INFO          STRUCT 8
     address                     DWORD ? ;ULONG_PTR; //addrvalue (jumps + calls) ;88
     branch                      BYTE ?; //jumps/calls: 1 = jmp, 257 = call ;92
     call_                       BYTE ?; //instruction is a call - this is the length of the instruction ; 94
-    ;boolpad                     WORD ? ;padding for boolean fields branch and call - not needed align struct 8 instead
     size_                       DWORD ? ;96
     instruction                 DB [MAX_MNEMONIC_SIZE * 4] DUP (?); 100
 BASIC_INSTRUCTION_INFO          ENDS
@@ -805,14 +820,19 @@ XREF_INFO						STRUCT 8
 XREF_INFO						ENDS
 
 ; Gui defines
+; Plugin menu handle enums
 GUI_PLUGIN_MENU                 EQU 0
 GUI_DISASM_MENU                 EQU 1
 GUI_DUMP_MENU                   EQU 2
 GUI_STACK_MENU                  EQU 3
 
-GUI_DISASSEMBLY                 EQU 0
-GUI_DUMP                        EQU 1
-GUI_STACK                       EQU 2
+; GuiSelectionGet window handle enums
+GUI_DISASSEMBLY 				EQU 0
+GUI_DUMP 						EQU 1
+GUI_STACK 						EQU 2
+GUI_GRAPH 						EQU 3
+GUI_MEMMAP 						EQU 4
+GUI_SYMMOD 						EQU 5
 
 GUI_MAX_LINE_SIZE               EQU 65536d
 GUI_MAX_DISASSEMBLY_SIZE        EQU 2048d
@@ -901,6 +921,13 @@ GUI_UPDATE_WATCH_VIEW      		EQU 78 ; param1=unused,               param2=unused
 GUI_LOAD_GRAPH      			EQU 79 ; param1=BridgeCFGraphList*    param2=unused
 GUI_GRAPH_AT      				EQU 80 ; param1=duint addr            param2=unused
 GUI_UPDATE_GRAPH_VIEW      		EQU 81 ; param1=unused,               param2=unused
+GUI_SET_LOG_ENABLED				EQU 82 ; param1=bool isEnabled        param2=unused
+GUI_ADD_FAVOURITE_TOOL			EQU 83 ; param1=const char* name      param2=const char* description
+GUI_ADD_FAVOURITE_COMMAND		EQU 84 ; param1=const char* command   param2=const char* shortcut
+GUI_SET_FAVOURITE_TOOL_SHORTCUT	EQU 85 ; param1=const char* name      param2=const char* shortcut
+GUI_FOLD_DISASSEMBLY			EQU 86 ; param1=duint startAddress    param2=duint length
+GUI_SELECT_IN_MEMORY_MAP		EQU 87 ; param1=duint addr,           param2=unused
+GUI_GET_ACTIVE_VIEW				EQU 88 ; param1=ACTIVEVIEW*,          param2=unused
 
 ; GUI Typedefs
 GUICALLBACK                     PROTO C
@@ -931,6 +958,12 @@ SCRIPTTYPEINFO                  STRUCT 8
     completeCommand             DWORD ? ; pointer to GUISCRIPTCOMPLETER ?
 SCRIPTTYPEINFO                  ENDS
 
+ACTIVEVIEW						STRUCT 8
+    titleHwnd					DWORD ? ; void* 
+    classHwnd					DWORD ? ; void* 
+    szTitle						DB MAX_STRING_SIZE DUP (?)
+    className					DB MAX_STRING_SIZE DUP (?)
+ACTIVEVIEW						ENDS
 
 ; Dbg functions
 dbgfunctionsget                 PROTO C
@@ -996,7 +1029,7 @@ TCPCONNECTIONINFO				ENDS
 ; _DbgFunctions ModPathFromAddr, sel.start, Addr modpath, MAX_PATH
 ;
 ;--------------------------------------------------------------------------------------------------------
-DBGFUNCTIONS                    STRUCT 8
+DBGFUNCTIONS                    STRUCT
     AssembleAtEx                DWORD ? ; (duint addr, const char* instruction, char* error, bool fillnop);
     SectionFromAddr             DWORD ? ; (duint addr, char* section);
     ModNameFromAddr             DWORD ? ; (duint addr, char* modname, bool extension);
@@ -1014,7 +1047,7 @@ DBGFUNCTIONS                    STRUCT 8
     ModPathFromAddr             DWORD ? ; (duint addr, char* path, int size);
     ModPathFromName             DWORD ? ; (const char* modname, char* path, int size);
     DisasmFast                  DWORD ? ; (unsigned char* data, duint addr, BASIC_INSTRUCTION_INFO* basicinfo);
-    MemUpdateMap                DWORD ? ; 
+    MemUpdateMap                DWORD ? ; ()
     GetCallStack                DWORD ? ; (DBGCALLSTACK* callstack);
 	GetSEHChain					DWORD ? ; (DBGSEHCHAIN* sehchain);
     SymbolDownloadAllSymbols    DWORD ? ; (const char* szSymbolStore);
@@ -1025,7 +1058,7 @@ DBGFUNCTIONS                    STRUCT 8
     GetPageRights               DWORD ? ; (duint addr, char* rights);
     SetPageRights               DWORD ? ; (duint addr, const char* rights);
     PageRightsToString          DWORD ? ; (DWORD protect, char* rights);
-    IsProcessElevated           DWORD ? ;
+    IsProcessElevated           DWORD ? ; ()
     GetCmdline                  DWORD ? ; (char* cmdline, size_t* cbsize);
     SetCmdline                  DWORD ? ; (const char* cmdline);
     FileOffsetToVa              DWORD ? ; (const char* modname, duint offset);
@@ -1048,6 +1081,10 @@ DBGFUNCTIONS                    STRUCT 8
 	ModGetParty					DWORD ? ; (duint base);
 	ModSetParty					DWORD ? ; (duint base, int party);
 	WatchIsWatchDogTriggered	DWORD ? ; (unsigned int id);
+    MemIsCodePage				DWORD ? ; (duint addr, bool refresh);
+    AnimateCommand				DWORD ? ; (const char* command);
+    DbgSetDebuggeeInitScript	DWORD ? ; (const char* fileName);
+    DbgGetDebuggeeInitScript	DWORD ? ; ()
 DBGFUNCTIONS                    ENDS
 
 

@@ -8,7 +8,7 @@ This is a consolidation and conversion of the original x64dbg plugin SDK files: 
 
 For 64bit support use the x64dbg Plugin SDK for x64 Assembler found [here](https://github.com/mrfearless/x64dbg-Plugin-SDK-For-x64-Assembler)
 
-v1.0.0.5 - Last updated: 28/07/2016 - small updates
+v1.0.0.6 - Last updated: 29/09/2016 - small updates
 
 ## More Information
 

@@ -1,9 +1,17 @@
 ;--------------------------------------------------------------------------------------------------------
-; x64dbg plugin SDK for Masm - fearless 2016 - www.LetTheLight.in
-; 
-; v1.0.0.5 - Last updated: 28/07/2016 
+; x64dbg Plugin SDK For x86 Assembler - https://github.com/mrfearless/x64dbg-Plugin-SDK-For-x86-Assembler
 ;
-; Supports 32bit x32dbg only.
+; fearless 2016 - www.LetTheLight.in
+;
+; v1.0.0.6 - Last updated: 29/09/2016 
+;
+; This SDK Supports 32bit x64dbg only.
+;
+; x64dbg Plugin SDK For x86 Assembler can be downloaded from here:
+; https://github.com/mrfearless/x64dbg-Plugin-SDK-For-x86-Assembler
+;
+; x64dbg Plugin SDK For x64 Assembler can be downloaded from here:
+; https://github.com/mrfearless/x64dbg-Plugin-SDK-For-x64-Assembler
 ;
 ; Include file for x32dbg.dll exports, constants and structures.
 ;
@@ -70,6 +78,8 @@ _plugin_unregistercommand   PROTO C :DWORD, :DWORD ; (int pluginHandle, const ch
 _plugin_waituntilpaused     PROTO C
 _plugin_registerexprfunction PROTO C :DWORD, :DWORD, :DWORD, :DWORD, :DWORD ; (int pluginHandle, const char* name, int argc, CBPLUGINEXPRFUNCTION cbFunction, void* userdata);
 _plugin_unregisterexprfunction PROTO C :DWORD, :DWORD ; (int pluginHandle, const char* name);
+_plugin_unload				PROTO C :DWORD ; (const char* pluginName);
+_plugin_load				PROTO C :DWORD ; (const char* pluginName);
 
 ; Callback functions for plugins. Any that are used in your plugin need to be exported (added to list of functions in plugin.def)
 ; each callback function has two parameters: cbType and cbInfo. cbInfo is a pointer to a specific structure (depending on the function)
