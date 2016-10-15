@@ -29,6 +29,9 @@ PLUG_CB_DEBUGEVENT,DebugEvent
 PLUG_CB_MENUENTRY,hEntry
 PLUG_CB_WINEVENT,message,result,retval
 PLUG_CB_WINEVENTGLOBAL,message,retval
+PLUG_CB_LOADSAVEDB,root,loadSaveType
+PLUG_CB_FILTERSYMBOL,symbol,retval
+PLUG_CB_TRACEEXECUTE,cip,stop
 MEMORY_INFO,value,size_,mnemonic
 VALUE_INFO,value,size_
 MEMPAGE,mbi,info

@@ -523,8 +523,8 @@ BRIDGEBP                        ENDS
 
 BPMAP                           STRUCT 8
     count                       DWORD ?
-    lpBridgeBp                  DWORD ? ; BRIDGEBP* ; additional BRIDGEBPs are located in memory one after another, at lpBridgeBp + (SIZEOF BRIDGEBP * bpindex) where first bpindex is 0, second is 1 and so on
-BPMAP                           ENDS
+    lpBridgeBp                  DWORD ? ; BRIDGEBP* ; additional BRIDGEBPs are located in memory one after 
+BPMAP                           ENDS ; another, at lpBridgeBp + (SIZEOF BRIDGEBP * bpindex) where first bpindex is 0, second is 1 and so on
 
 WATCHINFO						STRUCT 8
     WatchName					DB MAX_WATCH_NAME_SIZE DUP (?)
