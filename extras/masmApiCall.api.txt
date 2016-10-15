@@ -302,6 +302,10 @@ GetDbgEvents
 ModGetParty,dwBaseAddress
 ModSetParty,dwBaseAddress,dwParty
 WatchIsWatchDogTriggered,id
+MemIsCodePage,dwAddress,bRefresh
+AnimateCommand,command
+DbgSetDebuggeeInitScript,fileName
+DbgGetDebuggeeInitScript
 ;
 ;x64dbgpluginsdk_x86 PluginFunctions - supplementary functions for plugins
 ;

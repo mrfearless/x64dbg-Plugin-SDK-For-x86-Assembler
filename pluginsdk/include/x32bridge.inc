@@ -3,7 +3,7 @@
 ;
 ; fearless 2016 - www.LetTheLight.in
 ;
-; v1.0.0.6 - Last updated: 29/09/2016 
+; v1.0.0.7 - Last updated: 15/10/2016 
 ;
 ; This SDK Supports 32bit x64dbg only.
 ;
@@ -498,6 +498,8 @@ MEMMAP                          ENDS
 BPNORMAL 				EQU 0
 BPHARDWARE 				EQU 1
 BPMEMORY 				EQU 2
+BPDLL					EQU 3
+BPEXCEPTION				EQU 4
 
 BRIDGEBP                        STRUCT 8
     bpxtype                     BPXTYPE ?

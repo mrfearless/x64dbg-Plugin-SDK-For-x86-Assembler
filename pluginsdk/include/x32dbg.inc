@@ -3,7 +3,7 @@
 ;
 ; fearless 2016 - www.LetTheLight.in
 ;
-; v1.0.0.6 - Last updated: 29/09/2016 
+; v1.0.0.7 - Last updated: 15/10/2016 
 ;
 ; This SDK Supports 32bit x64dbg only.
 ;
@@ -107,7 +107,10 @@ CBDEBUGEVENT                PROTO C :DWORD, :DWORD ; cbType, cbInfo pointer to P
 CBMENUENTRY                 PROTO C :DWORD, :DWORD ; cbType, cbInfo pointer to PLUG_CB_MENUENTRY structure: hEntry
 CBWINEVENT                  PROTO C :DWORD, :DWORD ; cbType, cbInfo pointer to PLUG_CB_WINEVENT structure: message, result, retval (only set this to true, never to false)
 CBWINEVENTGLOBAL            PROTO C :DWORD, :DWORD ; cbType, cbInfo pointer to PLUG_CB_WINEVENTGLOBAL structure: message, retval (only set this to true, never to false)
-
+CBLOADDB					PROTO C :DWORD, :DWORD ; cbType, cbInfo pointer to PLUG_CB_LOADSAVEDB
+CBSAVEDB					PROTO C :DWORD, :DWORD ; cbType, cbInfo pointer to PLUG_CB_LOADSAVEDB
+CBFILTERSYMBOL				PROTO C :DWORD, :DWORD ; cbType, cbInfo pointer to PLUG_CB_FILTERSYMBOL
+CBTRACEEXECUTE				PROTO C :DWORD, :DWORD ; cbType, cbInfo pointer to PLUG_CB_TRACEEXECUTE
 
 ; enum macro is used to enumerate constants - similar to how enum works in c. 
 enum macro _param_:VARARG
@@ -177,7 +180,7 @@ PLUG_DB_LOADSAVE_DATA 	EQU 1
 PLUG_DB_LOADSAVE_ALL 	EQU 2
 
 ; pluginit - This structure is used by the only needed export in the plugin interface
-PLUG_INITSTRUCT         STRUCT 8
+PLUG_INITSTRUCT         STRUCT
     pluginHandle        DWORD ?         ; Handle of the plugin, received from the pluginit call. Data provided by the debugger to the plugin.
     sdkVersion          DWORD ?         ; Plugin SDK version, use the PLUG_SDKVERSION define for this. Data provided by the plugin to the debugger (required).
     pluginVersion       DWORD ?         ; Plugin version, useful for crash reports. Data provided by the plugin to the debugger (required).
@@ -185,7 +188,7 @@ PLUG_INITSTRUCT         STRUCT 8
 PLUG_INITSTRUCT         ENDS
 
 ; plugsetup - This structure is used by the function that allows the creation of plugin menu entries
-PLUG_SETUPSTRUCT        STRUCT 8
+PLUG_SETUPSTRUCT        STRUCT
     hwndDlg             DWORD ?         ; GUI window handle. Data provided by the debugger to the plugin.
     hMenu               DWORD ?         ; Plugin menu handle. Data provided by the debugger to the plugin.
     hMenuDisasm         DWORD ?         ; Plugin disasm menu handle. Data provided by the debugger to the plugin.
@@ -196,110 +199,122 @@ PLUG_SETUPSTRUCT        ENDS
 
 ; Callback structures
 
-PLUG_SCRIPTSTRUCT		STRUCT 8
+PLUG_SCRIPTSTRUCT		STRUCT
 	data				DWORD ? ; user data
 PLUG_SCRIPTSTRUCT		ENDS
 
 ; Called on debug initialization, useful to initialize some variables
-PLUG_CB_INITDEBUG       STRUCT 8
+PLUG_CB_INITDEBUG       STRUCT
     szFileName          DWORD ?
 PLUG_CB_INITDEBUG       ENDS
 
-PLUG_CB_STOPDEBUG       STRUCT 8
+PLUG_CB_STOPDEBUG       STRUCT
     reserved            DWORD ?
 PLUG_CB_STOPDEBUG       ENDS
 
-PLUG_CB_CREATEPROCESS   STRUCT 8
+PLUG_CB_CREATEPROCESS   STRUCT
     CreateProcessInfo   DWORD ? ; pointer to CREATE_PROCESS_DEBUG_INFO <>
     modInfo             DWORD ? ; pointer to IMAGEHLP_MODULE64 <>
     DebugFileName       DWORD ?
     fdProcessInfo       DWORD ? ; pointer to PROCESS_INFORMATION <>
 PLUG_CB_CREATEPROCESS   ENDS
     
-PLUG_CB_EXITPROCESS     STRUCT 8
+PLUG_CB_EXITPROCESS     STRUCT
     ExitProcess         DWORD ? ; pointer to EXIT_PROCESS_DEBUG_INFO <> 
 PLUG_CB_EXITPROCESS     ENDS
 
-PLUG_CB_CREATETHREAD    STRUCT 8
+PLUG_CB_CREATETHREAD    STRUCT
     CreateThread        DWORD ? ; pointer to CREATE_THREAD_DEBUG_INFO <>
     dwThreadId          DWORD ?
 PLUG_CB_CREATETHREAD    ENDS
 
-PLUG_CB_EXITTHREAD      STRUCT 8
+PLUG_CB_EXITTHREAD      STRUCT
     ExitThread          DWORD ? ; pointer to EXIT_THREAD_DEBUG_INFO <> 
     dwThreadId          DWORD ?
 PLUG_CB_EXITTHREAD      ENDS
 
-PLUG_CB_SYSTEMBREAKPOINT STRUCT 8
+PLUG_CB_SYSTEMBREAKPOINT STRUCT
     reserved            DWORD ?
 PLUG_CB_SYSTEMBREAKPOINT ENDS
 
-PLUG_CB_LOADDLL         STRUCT 8
+PLUG_CB_LOADDLL         STRUCT
     LoadDll             DWORD ? ; pointer to LOAD_DLL_DEBUG_INFO <>
     modInfo             DWORD ? ; pointer to IMAGEHLP_MODULE64 <> 
     modname             DWORD ?
 PLUG_CB_LOADDLL         ENDS
 
-PLUG_CB_UNLOADDLL       STRUCT 8
+PLUG_CB_UNLOADDLL       STRUCT
     UnloadDll           DWORD ? ; pointer to UNLOAD_DLL_DEBUG_INFO <>
 PLUG_CB_UNLOADDLL       ENDS
 
-PLUG_CB_OUTPUTDEBUGSTRING STRUCT 8
+PLUG_CB_OUTPUTDEBUGSTRING STRUCT
     DebugString         DWORD ? ; pointer to OUTPUT_DEBUG_STRING_INFO <>
 PLUG_CB_OUTPUTDEBUGSTRING ENDS
 
-PLUG_CB_EXCEPTION       STRUCT 8
+PLUG_CB_EXCEPTION       STRUCT
     Exception           DWORD ? ; pointer to EXCEPTION_DEBUG_INFO <>
 PLUG_CB_EXCEPTION       ENDS
 
-PLUG_CB_BREAKPOINT      STRUCT 8
+PLUG_CB_BREAKPOINT      STRUCT
     breakpoint          DWORD ? ; pointer to BRIDGEBP <>
 PLUG_CB_BREAKPOINT      ENDS
 
-PLUG_CB_PAUSEDEBUG      STRUCT 8
+PLUG_CB_PAUSEDEBUG      STRUCT
     reserved            DWORD ?
 PLUG_CB_PAUSEDEBUG      ENDS
 
-PLUG_CB_RESUMEDEBUG     STRUCT 8
+PLUG_CB_RESUMEDEBUG     STRUCT
     reserved            DWORD ?
 PLUG_CB_RESUMEDEBUG     ENDS
 
-PLUG_CB_STEPPED         STRUCT 8
+PLUG_CB_STEPPED         STRUCT
     reserved            DWORD ?
 PLUG_CB_STEPPED         ENDS
        
-PLUG_CB_ATTACH          STRUCT 8
+PLUG_CB_ATTACH          STRUCT
     dwProcessId         DWORD ?
 PLUG_CB_ATTACH          ENDS
 
-PLUG_CB_DETACH          STRUCT 8
+PLUG_CB_DETACH          STRUCT
     fdProcessInfo       DWORD ? ; pointer to PROCESS_INFORMATION <>
 PLUG_CB_DETACH          ENDS
 
-PLUG_CB_DEBUGEVENT      STRUCT 8
+PLUG_CB_DEBUGEVENT      STRUCT
     DebugEvent          DWORD ? ; pointer to DEBUG_EVENT <>
 PLUG_CB_DEBUGEVENT      ENDS
 
-PLUG_CB_MENUENTRY       STRUCT 8
+PLUG_CB_MENUENTRY       STRUCT
     hEntry              DWORD ?
 PLUG_CB_MENUENTRY       ENDS
 
-PLUG_CB_WINEVENT        STRUCT 8
+PLUG_CB_WINEVENT        STRUCT
     message             DWORD ? pointer to MSG <>
     result              DWORD ?
     retval              DWORD ?
 PLUG_CB_WINEVENT        ENDS
 
-PLUG_CB_WINEVENTGLOBAL  STRUCT 8
+PLUG_CB_WINEVENTGLOBAL  STRUCT
     message             DWORD ? ; pointer to MSG <>;
     retval              DWORD ?
 PLUG_CB_WINEVENTGLOBAL  ENDS
 
-PLUG_CB_LOADSAVEDB		STRUCT 8
+PLUG_CB_LOADSAVEDB		STRUCT
     root				DWORD ? ; point to JSON <>
     loadSaveType		DWORD ?
 PLUG_CB_LOADSAVEDB		ENDS
 
+PLUG_CB_FILTERSYMBOL	STRUCT
+	symbol				DWORD ? ; pointer to const char* 
+    retval				DWORD ? ; bool
+PLUG_CB_FILTERSYMBOL	ENDS
+
+PLUG_CB_TRACEEXECUTE	STRUCT 
+	cip					DWORD ?
+	stop				DWORD ? ; bool
+PLUG_CB_TRACEEXECUTE	ENDS
+
+
+
 enum CB_INITDEBUG,CB_STOPDEBUG,CB_CREATEPROCESS,CB_EXITPROCESS,CB_CREATETHREAD,CB_EXITTHREAD,CB_SYSTEMBREAKPOINT,CB_LOADDLL,CB_UNLOADDLL,CB_OUTPUTDEBUGSTRING,CB_EXCEPTION
 enum CB_BREAKPOINT=11d,CB_PAUSEDEBUG,CB_RESUMEDEBUG,CB_STEPPED,CB_ATTACH,CB_DETACH,CB_DEBUGEVENT,CB_MENUENTRY,CB_WINEVENT,CB_WINEVENTGLOBAL
-enum CB_LOADDB=21d,CB_SAVEDB
+enum CB_LOADDB=21d,CB_SAVEDB,CB_FILTERSYMBOL,CB_TRACEEXECUTE,CB_LAST
