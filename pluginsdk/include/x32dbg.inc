@@ -3,7 +3,9 @@
 ;
 ; fearless 2016 - www.LetTheLight.in
 ;
-; v1.0.0.7 - Last updated: 15/10/2016 
+; v1.0.0.8 - Last updated: 17/10/2016 
+; 
+; Feature synced with x64dbg commit: https://github.com/x64dbg/x64dbg/commit/98d04b2a7842b92ea2eb2b2ba51a6256eb779453
 ;
 ; This SDK Supports 32bit x64dbg only.
 ;
@@ -70,6 +72,7 @@ _plugin_menuaddseparator    PROTO C :DWORD ; (int hMenu);
 _plugin_menuclear           PROTO C :DWORD ; (int hMenu);
 _plugin_menuseticon         PROTO C :DWORD, :DWORD ; (int hMenu, const ICONDATA* icon);
 _plugin_menuentryseticon    PROTO C :DWORD, :DWORD, :DWORD ; (int pluginHandle, int hEntry, const ICONDATA* icon);
+_plugin_menuentrysetchecked	PROTO C :DWORD, :DWORD, :DWORD ; (int pluginHandle, int hEntry, bool checked)
 _plugin_registercommand     PROTO C :DWORD, :DWORD, :DWORD, :DWORD ; (int pluginHandle, const char* command, CBPLUGINCOMMAND cbCommand, bool debugonly);
 _plugin_registercallback    PROTO C :DWORD, :DWORD, :DWORD ; (int pluginHandle, CBTYPE cbType, CBPLUGIN cbPlugin);
 _plugin_startscript         PROTO C :DWORD ; (CBPLUGINSCRIPT cbScript);
@@ -80,6 +83,7 @@ _plugin_registerexprfunction PROTO C :DWORD, :DWORD, :DWORD, :DWORD, :DWORD ; (i
 _plugin_unregisterexprfunction PROTO C :DWORD, :DWORD ; (int pluginHandle, const char* name);
 _plugin_unload				PROTO C :DWORD ; (const char* pluginName);
 _plugin_load				PROTO C :DWORD ; (const char* pluginName);
+
 
 ; Callback functions for plugins. Any that are used in your plugin need to be exported (added to list of functions in plugin.def)
 ; each callback function has two parameters: cbType and cbInfo. cbInfo is a pointer to a specific structure (depending on the function)

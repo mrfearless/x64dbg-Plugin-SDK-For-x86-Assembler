@@ -3,7 +3,9 @@
 ;
 ; fearless 2016 - www.LetTheLight.in
 ;
-; v1.0.0.7 - Last updated: 15/10/2016 
+; v1.0.0.8 - Last updated: 17/10/2016 
+; 
+; Feature synced with x64dbg commit: https://github.com/x64dbg/x64dbg/commit/98d04b2a7842b92ea2eb2b2ba51a6256eb779453
 ;
 ; This SDK Supports 32bit x64dbg only.
 ;
@@ -191,6 +193,7 @@ GuiMenuAdd                      PROTO C  :DWORD, :DWORD ; (int hMenu, const char
 GuiMenuAddEntry                 PROTO C  :DWORD, :DWORD ; (int hMenu, const char* title);
 GuiMenuAddSeparator             PROTO C  :DWORD ; (int hMenu);
 GuiMenuClear                    PROTO C  :DWORD ; (int hMenu);
+GuiMenuSetEntryChecked			PROTO C  :DWORD, :DWORD ;(int hEntry, bool checked);
 GuiSelectionGet                 PROTO C  :DWORD, :DWORD ; (int hWindow, SELECTIONDATA* selection);
 GuiSelectionSet                 PROTO C  :DWORD, :DWORD ; (int hWindow, const SELECTIONDATA* selection);
 GuiGetLineWindow                PROTO C  :DWORD, :DWORD ; (const char* title, char* text);
