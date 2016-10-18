@@ -3,9 +3,9 @@
 ;
 ; fearless 2016 - www.LetTheLight.in
 ;
-; v1.0.0.8 - Last updated: 17/10/2016 
+; v1.0.0.9 - Last updated: 18/10/2016 
 ; 
-; Feature synced with x64dbg commit: https://github.com/x64dbg/x64dbg/commit/98d04b2a7842b92ea2eb2b2ba51a6256eb779453
+; Feature synced with x64dbg commit: https://github.com/x64dbg/x64dbg/commit/0dc2cde1437d4ba24a0f286dbbbd5ad97bb8525e
 ;
 ; This SDK Supports 32bit x64dbg only.
 ;
@@ -83,7 +83,7 @@ _plugin_registerexprfunction PROTO C :DWORD, :DWORD, :DWORD, :DWORD, :DWORD ; (i
 _plugin_unregisterexprfunction PROTO C :DWORD, :DWORD ; (int pluginHandle, const char* name);
 _plugin_unload				PROTO C :DWORD ; (const char* pluginName);
 _plugin_load				PROTO C :DWORD ; (const char* pluginName);
-
+_plugin_hash				PROTO C :DWORD, :DWORD ; (void* data, size_t size);
 
 ; Callback functions for plugins. Any that are used in your plugin need to be exported (added to list of functions in plugin.def)
 ; each callback function has two parameters: cbType and cbInfo. cbInfo is a pointer to a specific structure (depending on the function)
