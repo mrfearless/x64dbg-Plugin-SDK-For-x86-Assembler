@@ -5,7 +5,7 @@
 ;
 ; v1.0.0.9 - Last updated: 18/10/2016 
 ; 
-; Feature synced with x64dbg commit: https://github.com/x64dbg/x64dbg/commit/0dc2cde1437d4ba24a0f286dbbbd5ad97bb8525e
+; Feature synced with x64dbg commit: https://github.com/x64dbg/x64dbg/commit/9138a3410e9593dafdb6177cd5f8612df7543e7a
 ;
 ; This SDK Supports 32bit x64dbg only.
 ;
@@ -138,7 +138,7 @@ DbgSetEncodeType                PROTO C :DWORD, :DWORD, :DWORD ;(duint addr, dui
 DbgDelEncodeTypeRange           PROTO C :DWORD, :DWORD ;(duint start, duint end);
 DbgDelEncodeTypeSegment         PROTO C :DWORD ;(duint start);
 DbgGetWatchList                 PROTO C :DWORD ;(ListOf(WATCHINFO) list);
-
+DbgSelChanged					PROTO C :DWORD, :DWORD ; (int hWindow, duint VA);
 
 GuiGetCurrentAddress			TEXTEQU <GuiSelectionGet> ; alias
 
@@ -239,7 +239,7 @@ GuiSetFavouriteToolShortcut		PROTO C  :DWORD, :DWORD ; (const char* name, const 
 GuiFoldDisassembly				PROTO C  :DWORD, :DWORD ; (duint startAddress, duint length);
 GuiSelectInMemoryMap			PROTO C  :DWORD ; (duint addr);
 GuiGetActiveView				PROTO C  :DWORD ; (ACTIVEVIEW* activeView);
-
+GuiAddInfoLine					PROTO C  :DWORD ; (const char* infoLine);
 
 ; enum macro is used to enumerate constants - similar to how enum works in c. 
 enum macro _param_:VARARG
