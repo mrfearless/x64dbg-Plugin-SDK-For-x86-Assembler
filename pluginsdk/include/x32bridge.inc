@@ -3,9 +3,9 @@
 ;
 ; fearless 2016 - www.LetTheLight.in
 ;
-; v1.0.0.9 - Last updated: 18/10/2016 
+; v1.0.0.10 - Last updated: 29/11/2016 
 ; 
-; Feature synced with x64dbg commit: https://github.com/x64dbg/x64dbg/commit/9138a3410e9593dafdb6177cd5f8612df7543e7a
+; Feature synced with x64dbg commit: https://github.com/x64dbg/x64dbg/commit/98da939bf48a898ceb0c4ce69b3be1da215244b3
 ;
 ; This SDK Supports 32bit x64dbg only.
 ;
@@ -139,6 +139,10 @@ DbgDelEncodeTypeRange           PROTO C :DWORD, :DWORD ;(duint start, duint end)
 DbgDelEncodeTypeSegment         PROTO C :DWORD ;(duint start);
 DbgGetWatchList                 PROTO C :DWORD ;(ListOf(WATCHINFO) list);
 DbgSelChanged					PROTO C :DWORD, :DWORD ; (int hWindow, duint VA);
+DbgGetProcessHandle				PROTO C
+DbgGetThreadHandle				PROTO C
+DbgGetProcessId					PROTO C
+DbgGetThreadId					PROTO C
 
 GuiGetCurrentAddress			TEXTEQU <GuiSelectionGet> ; alias
 
@@ -240,6 +244,10 @@ GuiFoldDisassembly				PROTO C  :DWORD, :DWORD ; (duint startAddress, duint lengt
 GuiSelectInMemoryMap			PROTO C  :DWORD ; (duint addr);
 GuiGetActiveView				PROTO C  :DWORD ; (ACTIVEVIEW* activeView);
 GuiAddInfoLine					PROTO C  :DWORD ; (const char* infoLine);
+GuiProcessEvents				PROTO C
+GuiTypeAddNode					PROTO C  :DWORD, :DWORD ; (void* parent, const TYPEDESCRIPTOR* type);
+GuiTypeClear					PROTO C
+GuiUpdateTypeWidget				PROTO C
 
 ; enum macro is used to enumerate constants - similar to how enum works in c. 
 enum macro _param_:VARARG
@@ -301,10 +309,10 @@ TCP_ADDR_SIZE 					EQU 50
 ; Debugger enums
 enum initialized,paused,running,stopped
 enum SEG_DEFAULT,SEG_ES,SEG_DS,SEG_FS,SEG_GS,SEG_CS,SEG_SS ; SEGMENTREG
-enum flagmodule=1,flaglabel=2,flagcomment=4,flagbookmark=8,flagfunction=16,flagloop=32
-enum bp_none=0,bp_normal=1,bp_hardware=2,bp_memory=4 ; BPXTYPE
+enum flagmodule=1,flaglabel=2,flagcomment=4,flagbookmark=8,flagfunction=16,flagloop=32,flagargs=64,flagNoFuncOffset=128
+enum bp_none=0,bp_normal=1,bp_hardware=2,bp_memory=4,bp_dll=8,bp_exception=16 ; BPXTYPE
 enum FUNC_NONE,FUNC_BEGIN,FUNC_MIDDLE,FUNC_END,FUNC_SINGLE
-enum LOOP_NONE,LOOP_BEGIN,LOOP_MIDDLE,LOOP_ENTRY,LOOP_END
+enum LOOP_NONE,LOOP_BEGIN,LOOP_MIDDLE,LOOP_ENTRY,LOOP_END,LOOP_SINGLE
 enum XREF_NONE,XREF_DATA,XREF_JMP,XREF_CALL
 enum ARG_NONE,ARG_BEGIN,ARG_MIDDLE,ARG_END,ARG_SINGLE
 
@@ -373,6 +381,11 @@ DBG_ARGUMENT_OVERLAPS       	EQU 61 ;param1=FUNCTION* info,            param2=un
 DBG_ARGUMENT_ADD       			EQU 62 ;param1=FUNCTION* info,            param2=unused
 DBG_ARGUMENT_DEL       			EQU 63 ;param1=FUNCTION* info,            param2=unused
 DBG_GET_WATCH_LIST       		EQU 64 ;param1=ListOf(WATCHINFO),         param2=unused
+DBG_SELCHANGED					EQU 65 ;param1=hWindow,                   param2=VA
+DBG_GET_PROCESS_HANDLE			EQU 66 ;param1=unused,                    param2=unused
+DBG_GET_THREAD_HANDLE			EQU 67 ;param1=unused,                    param2=unused
+DBG_GET_PROCESS_ID				EQU 68 ;param1=unused,                    param2=unused
+DBG_GET_THREAD_ID				EQU 69 ;param1=unused,                    param2=unused
 
 enum linecommand,linebranch,linelabel,linecomment,lineempty
 enum scriptnobranch,scriptjmp,scriptjnejnz,scriptjejz,scriptjbjl,scriptjajg,scriptjbejle,scriptjaejge,scriptcall
@@ -550,6 +563,7 @@ LOOP_                           STRUCT 8
     depth                       DWORD ? ; int
     start                       DWORD ? ; duint
     finish                      DWORD ? ; duint
+	instrcount					DWORD ? ; duint 
 LOOP_                           ENDS
 
 ADDRINFO                        STRUCT 8
@@ -560,6 +574,7 @@ ADDRINFO                        STRUCT 8
     isbookmark                  DWORD ?;
     function                    FUNCTION <>
     loop_                       LOOP_ <>
+	args						FUNCTION <>
 ADDRINFO                        ENDS
 
 SYMBOLINFO_                     STRUCT 8
@@ -766,6 +781,10 @@ THREADALLINFO                   STRUCT 8
     Priority                    THREADPRIORITY <>
     WaitReason                  THREADWAITREASON <>     
     LastError                   DWORD ?
+    UserTime					FILETIME <>
+    KernelTime					FILETIME <>
+    CreationTime				FILETIME <>
+    Cycles						QWORD ? ; // Windows Vista or greater	
 THREADALLINFO                   ENDS
 
 THREADLIST                      STRUCT 8
@@ -933,11 +952,18 @@ GUI_SET_FAVOURITE_TOOL_SHORTCUT	EQU 85 ; param1=const char* name      param2=con
 GUI_FOLD_DISASSEMBLY			EQU 86 ; param1=duint startAddress    param2=duint length
 GUI_SELECT_IN_MEMORY_MAP		EQU 87 ; param1=duint addr,           param2=unused
 GUI_GET_ACTIVE_VIEW				EQU 88 ; param1=ACTIVEVIEW*,          param2=unused
+GUI_MENU_SET_ENTRY_CHECKED		EQU 89 ; param1=int hEntry,           param2=bool checked
+GUI_ADD_INFO_LINE				EQU 90 ; param1=const char* infoline, param2=unused
+GUI_PROCESS_EVENTS				EQU 91 ; param1=unused,               param2=unused
+GUI_TYPE_ADDNODE				EQU 92 ; param1=void* parent,         param2=TYPEDESCRIPTOR* type
+GUI_TYPE_CLEAR					EQU 93 ; param1=unused,               param2=unused
+GUI_UPDATE_TYPE_WIDGET			EQU 94 ; param1=unused,               param2=unused
 
 ; GUI Typedefs
 GUICALLBACK                     PROTO C
 GUISCRIPTEXECUTE                PROTO C  :DWORD ; (const char* text);
 GUISCRIPTCOMPLETER              PROTO C  :DWORD, :DWORD, :DWORD ;(const char* text, char** entries, int* entryCount);
+TYPETOSTRING					PROTO C  :DWORD, :DWORD, :DWORD ;(const struct _TYPEDESCRIPTOR* type, char* dest, size_t*
 
 ; GUI structures
 CELLINFO                        STRUCT 8
@@ -969,6 +995,18 @@ ACTIVEVIEW						STRUCT 8
     szTitle						DB MAX_STRING_SIZE DUP (?)
     className					DB MAX_STRING_SIZE DUP (?)
 ACTIVEVIEW						ENDS
+
+TYPEDESCRIPTOR					STRUCT 8
+    expanded					BYTE ?	; bool //is the type node expanded?
+    reverse						BYTE ?	; bool//big endian?
+    name						DWORD ?	; const char* //type name (int b)
+    addr						DWORD ?	; duint //virtual address
+    offset						DWORD ?	; duint //offset to addr for the actual location
+    id							DWORD ?	; int //type id
+    size						DWORD ?	; int //sizeof(type)
+    callback					DWORD ?	; pointer to TYPETOSTRING //convert to string
+    userdata					DWORD ?	; void* //user data
+TYPEDESCRIPTOR					ENDS
 
 ; Dbg functions
 dbgfunctionsget                 PROTO C
