@@ -1,11 +1,11 @@
 ;--------------------------------------------------------------------------------------------------------
 ; x64dbg Plugin SDK For x86 Assembler - https://github.com/mrfearless/x64dbg-Plugin-SDK-For-x86-Assembler
 ;
-; fearless 2016 - www.LetTheLight.in
+; fearless 2017 - www.LetTheLight.in
 ;
-; v1.0.0.10 - Last updated: 29/11/2016 
+; v1.0.0.12 - Last updated: 18/01/2017 
 ; 
-; Feature synced with x64dbg commit: https://github.com/x64dbg/x64dbg/commit/98da939bf48a898ceb0c4ce69b3be1da215244b3
+; Feature synced with x64dbg commit: https://github.com/x64dbg/x64dbg/commit/8b4c784457f520626643d29c24d331051a850ab3
 ;
 ; This SDK Supports 32bit x64dbg only.
 ;
@@ -958,6 +958,11 @@ GUI_PROCESS_EVENTS				EQU 91 ; param1=unused,               param2=unused
 GUI_TYPE_ADDNODE				EQU 92 ; param1=void* parent,         param2=TYPEDESCRIPTOR* type
 GUI_TYPE_CLEAR					EQU 93 ; param1=unused,               param2=unused
 GUI_UPDATE_TYPE_WIDGET			EQU 94 ; param1=unused,               param2=unused
+GUI_CLOSE_APPLICATION			EQU 95 ; param1=unused,               param2=unused
+GUI_MENU_SET_VISIBLE			EQU 96 ; param1=int hMenu,            param2=bool visible
+GUI_MENU_SET_ENTRY_VISIBLE		EQU 97 ; param1=int hEntry,           param2=bool visible
+GUI_MENU_SET_NAME				EQU 98 ; param1=int hMenu,            param2=const char* name
+GUI_MENU_SET_ENTRY_NAME			EQU 99 ; param1=int hEntry,           param2=const char* name
 
 ; GUI Typedefs
 GUICALLBACK                     PROTO C

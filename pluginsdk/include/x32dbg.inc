@@ -1,11 +1,11 @@
 ;--------------------------------------------------------------------------------------------------------
 ; x64dbg Plugin SDK For x86 Assembler - https://github.com/mrfearless/x64dbg-Plugin-SDK-For-x86-Assembler
 ;
-; fearless 2016 - www.LetTheLight.in
+; fearless 2017 - www.LetTheLight.in
 ;
-; v1.0.0.10 - Last updated: 29/11/2016 
+; v1.0.0.12 - Last updated: 18/01/2017 
 ; 
-; Feature synced with x64dbg commit: https://github.com/x64dbg/x64dbg/commit/98da939bf48a898ceb0c4ce69b3be1da215244b3
+; Feature synced with x64dbg commit: https://github.com/x64dbg/x64dbg/commit/8b4c784457f520626643d29c24d331051a850ab3
 ;
 ; This SDK Supports 32bit x64dbg only.
 ;
@@ -73,6 +73,10 @@ _plugin_menuclear           PROTO C :DWORD ; (int hMenu);
 _plugin_menuseticon         PROTO C :DWORD, :DWORD ; (int hMenu, const ICONDATA* icon);
 _plugin_menuentryseticon    PROTO C :DWORD, :DWORD, :DWORD ; (int pluginHandle, int hEntry, const ICONDATA* icon);
 _plugin_menuentrysetchecked	PROTO C :DWORD, :DWORD, :DWORD ; (int pluginHandle, int hEntry, bool checked)
+_plugin_menusetvisible		PROTO C :DWORD, :DWORD, :DWORD ; (int pluginHandle, int hMenu, bool visible);
+_plugin_menuentrysetvisible	PROTO C :DWORD, :DWORD, :DWORD ; (int pluginHandle, int hEntry, bool visible);
+_plugin_menusetname			PROTO C :DWORD, :DWORD, :DWORD ; (int pluginHandle, int hMenu, const char* name);
+_plugin_menuentrysetname	PROTO C :DWORD, :DWORD, :DWORD ; (int pluginHandle, int hEntry, const char* name);
 _plugin_registercommand     PROTO C :DWORD, :DWORD, :DWORD, :DWORD ; (int pluginHandle, const char* command, CBPLUGINCOMMAND cbCommand, bool debugonly);
 _plugin_registercallback    PROTO C :DWORD, :DWORD, :DWORD ; (int pluginHandle, CBTYPE cbType, CBPLUGIN cbPlugin);
 _plugin_startscript         PROTO C :DWORD ; (CBPLUGINSCRIPT cbScript);

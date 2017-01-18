@@ -12,5 +12,6 @@ template/x32dbg_plugin/
 downloads/
 screenshots/
 wiki/
+version/
 testplugin/go.bat
 packagesdk.bat

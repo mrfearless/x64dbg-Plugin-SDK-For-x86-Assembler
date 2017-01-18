@@ -1,6 +1,6 @@
 # x64dbg Plugin SDK For x86 Assembler
 
-fearless 2016 - [www.LetTheLight.in](http://www.LetTheLight.in)
+fearless 2017 - [www.LetTheLight.in](http://www.LetTheLight.in)
 
 ## Overview
 
@@ -8,7 +8,7 @@ This is a consolidation and conversion of the original x64dbg plugin SDK files: 
 
 For 64bit support use the x64dbg Plugin SDK for x64 Assembler found [here](https://github.com/mrfearless/x64dbg-Plugin-SDK-For-x64-Assembler)
 
-v1.0.0.10 - Last updated: 29/11/2016 - Feature synced with x64dbg commit: [98da939bf48a898ceb0c4ce69b3be1da215244b3](https://github.com/x64dbg/x64dbg/commit/98da939bf48a898ceb0c4ce69b3be1da215244b3)
+v1.0.0.12 - Last updated: 18/01/2017 - Feature synced with x64dbg commit: [8b4c784457f520626643d29c24d331051a850ab3](https://github.com/x64dbg/x64dbg/commit/8b4c784457f520626643d29c24d331051a850ab3)
 
 
 ## More Information
