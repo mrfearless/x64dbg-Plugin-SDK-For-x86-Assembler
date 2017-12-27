@@ -1005,10 +1005,10 @@ TYPEDESCRIPTOR					STRUCT 8
     expanded					BYTE ?	; bool //is the type node expanded?
     reverse						BYTE ?	; bool//big endian?
     name						DWORD ?	; const char* //type name (int b)
-    addr						DWORD ?	; duint //virtual address
-    offset						DWORD ?	; duint //offset to addr for the actual location
+    address						DWORD ?	; duint //virtual address
+    offsetaddr					DWORD ?	; duint //offset to addr for the actual location
     id							DWORD ?	; int //type id
-    size						DWORD ?	; int //sizeof(type)
+    typesize					DWORD ?	; int //sizeof(type)
     callback					DWORD ?	; pointer to TYPETOSTRING //convert to string
     userdata					DWORD ?	; void* //user data
 TYPEDESCRIPTOR					ENDS
